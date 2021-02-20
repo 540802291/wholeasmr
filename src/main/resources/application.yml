@@ -1,0 +1,11 @@
+server:
+  port: 80
+spring: #数据库连接配置
+  datasource:
+    username: root
+    password: Qwt411325
+    url: jdbc:mysql://wholenight.mysql.cn-chengdu.rds.aliyuncs.com:3306/asmr?useSSL=false&useUnicode=true&characterEncoding=utf-8&ServerTimeZone=GMT%2b8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
