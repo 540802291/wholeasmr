@@ -13,9 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/router")
 public class WholeNightController {
 
-    @GetMapping("/userCenter")   //路由到userCenter页面
-    public String userCenter(){
-        return "userCenter";
+    @GetMapping("/self")   //路由到个人中心页面
+    public String self(){
+        return "self";
+    }
+
+    @GetMapping("/menu")   //路由到资源列表
+    public String menu(){
+        return "menu";
+    }
+
+    @GetMapping("/login")   //路由到登陆页面
+    public String login(){
+        return "login";
     }
 
 }
