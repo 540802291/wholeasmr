@@ -1,14 +1,24 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- 必须的 meta 标签 -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap 的 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2394069_48t4hv8pcwf.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2394069_gdgqu3gd6tf.css">
     <title>Hello, world!</title>
     <style>
+        input{
+            outline: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: none;
+            cursor: pointer;
+        }
         .container{
             box-sizing: border-box;
             padding-top: 20px;
@@ -26,25 +36,30 @@
             height: 100%;
             border-radius: 10px;
             width: 32px;
-            border: solid 1px #666666;
+            border: solid 1px rgba(255,255,255,0.5);
+            box-shadow: 0px 0px 12px rgba(16, 174, 194, 0.12);
         }
         .top .user i{
             font-size: 20px;
+            color: rgba(16, 174, 194, 0.66);
         }
         .top .search{
             position: relative;
-            height: 32px;
+            height: 100%;
+            width: 85%;
         }
         .top .search input{
+            background: #F7FAFA;
             width: 100%;
-            border: solid 1px #666666;
+            border: solid 1px rgba(211,211,211,0.1);
             border-radius: 13px;
             height: 100%;
-            padding-left:10px ;
+            padding-left:10px;
         }
         .top .search input::placeholder{
             font-size: 13px;
             line-height: 32px;
+            color: #858B8B;
         }
         .top .search i{
             position: absolute;
@@ -52,34 +67,464 @@
             right: 10px;
             font-size: 20px;
             line-height: 32px;
+            color: #BEC2C2;
         }
-        .hot-light{
+        .light{
             height: 90px;
-            background: linear-gradient(to right,aquamarine,aqua);
             margin-top: 20px;
             border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
+        .hot{
+            background: url("./img/hot.png");
+            background-size: cover;
+        }
+        .recommend{
+            background: url("./img/recommend.png");
+            background-size: cover;
+        }
+        .country{
+            height: 90px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .country a{
+            width: 49%;
+            height: 100%;
+        }
+        .country .home,.country .outside{
+            height: 100%;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            padding-left: 20px;
+        }
+        .country .home{
+            background: url("./img/g1.png");
+            background-size: cover;
+        }
+        .country .outside{
+            background: url("./img/g2.png");
+            background-size: cover;
+        }
+        .country .home :last-child{
+            font-size: 13px;
+        }
+        .country .outside :last-child{
+            font-size: 13px;
+        }
+        .light .title{
+            padding-left: 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            height: 100%;
+            width: 50%;
+        }
+        .light .title :last-child{
+            font-size: 13px;
+        }
+        .light .preview{
+            height: 100%;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .light .preview img{
+            width: 39px;
+            height: 39px;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .light .preview :nth-child(1){
+            border: solid 1px white;
+            right: 75px;
+            z-index: 1;
+        }
+        .light .preview :nth-child(2){
+            border: solid 1px white;
+            right: 55px;
+            z-index: 2;
+        }
+        .light .preview :nth-child(3){
+            border: solid 1px white;
+            right: 35px;
+            z-index: 3;
+        }
+        .light .preview :nth-child(4){
+            right: 8px;
+            height: 8px;
+            width: 20px;
+        }
+        .menu,.author,.list{
+            margin-top: 20px;
+        }
+        .menu-title,.author-title,.list-title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .menu-title .m-t-title,.author-title .a-t-title,.list-title .l-t-title{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-title .m-t-more,.author-title .a-t-more,.list-title .l-t-more{
+            color: #FA7E23;
+            font-size: 12px;
+        }
+        .menu-title .m-t-title :first-child{
+            font-size: 15px;
+        }
+        .menu-title .m-t-title :last-child{
+            font-size: 12px;
+            color: #555D5D;
+        }
+        .author-title .a-t-title :first-child{
+            font-size: 15px;
+        }
+        .author-title .a-t-title :last-child{
+            font-size: 12px;
+            color: #555D5D;
+        }
+        .list-title .l-t-title :first-child{
+            font-size: 15px;
+        }
+        .list-title .l-t-title :last-child{
+            font-size: 12px;
+            color: #555D5D;
+        }
+        .col-author{
+            width: 100%;
+            padding: 0px 15px;
+        }
+        .author .author-content{
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+        .author-content::-webkit-scrollbar,.menu-content::-webkit-scrollbar{
+            display: none;
+        }
+        .author-item{
+            height: 140px;
+            width: 95px;
+            box-sizing: border-box;
+            border: 1px solid rgba(16, 174, 194, 0.2);
+            border-radius: 14px;
+            display: inline-block;
+            text-align: center;
+        }
+        .author-item .a-i-avatar{
+            margin: 10px;
+        }
+        .author-item .a-i-nick{
+            font-size: 12px;
+            color: black;
+        }
+        .author-item .a-i-btn{
+            font-size: 12px;
+            transform:scale(0.8);
+            height: 24px;
+            width: 58px;
+            background: #10AEC2;
+            border-radius: 21px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+            color: white;
+        }
+        .author-item .a-i-avatar{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+        .list-content{
+            margin-top: 20px;
+        }
+        .list-item a{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .list-item .l-i-info{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .list-item .avatar{
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+        }
+        .list-item .l-i-play{
+            width: 20px;
+            height: 20px;
+            position: relative;
+            right: 0;
+        }
+        .list-item .info{
+            margin-left: 10px;
+        }
+        .list-item .info :first-child{
+            font-size: 14px;
+            color: black;
+        }
+        .list-item .info :last-child{
+            font-size: 12px;
+            color: #555D5D;
+        }
+        .menu-content{
+            display: flex;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+        .menu-content img{
+            box-sizing: border-box;
+            width: 90px;
+            height: 90px;
+            display: inline-block;
+            border-radius: 15px;
+            margin-right: 5px;
+            position: relative;
+        }
+        .menu-content a{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+        }
+        .menu-content .m-c-name{
+            color: #000000;
+            font-size: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
+            margin-top:5px;
+        }
+        .menu-content .count-group{
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            color: #ffffff;
+            height: 19px;
+            background: rgba(0,0,0,.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            transform: scale(.8);
+            justify-content: space-evenly;
+            padding: 2px;
+        }
+        .menu-content .count-group span{
+            font-size: 12px;
+            margin-right: 1px;
+        }
+        .menu-content .count-group i{
+            font-weight: 600;
+        }
     </style>
 </head>
-<body>
+<body >
     <div class="container">
+        <!--登录按钮，以及搜索栏-->
         <div class="row top no-gutters">
             <div class="user">
                 <i class="iconfont icon-yonghu"></i>
             </div>
-            <div class="search col-10">
+            <div class="search">
                 <input placeholder="想听些什么?">
                 <i class="iconfont icon-web-icon-"></i>
             </div>
         </div>
-        <div class="row">
+        <!--灯塔 热播榜单-->
+        <div class="row lighthouse">
             <div class="col">
-                <div class="hot-light"></div>
+                <div class="light hot">
+                    <div class="title">
+                        <span>热播榜单</span>
+                        <span>whole night · 终夜灯</span>
+                    </div>
+                    <div class="preview">
+                        <img src="./img/avatar1.jpg">
+                        <img src="./img/2.jpg">
+                        <img src="./img/avatar3.jpg">
+                        <img src="./img/m.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--资源列表-->
+        <div class="row menu" th:each="i:${#numbers.sequence(1,2)}">
+            <div class="col">
+                <div class="menu-title">
+                    <div class="m-t-title">
+                        <span>自然助眠</span>
+                        <span>&nbsp;·&nbsp;环境下的安眠药</span>
+                    </div>
+                    <a class="m-t-more">更多</a>
+                </div>
+                <div class="menu-content">
+                    <a href="#" th:each="i:${#numbers.sequence(1,5)}">
+                        <img src="/img/avatar3.jpg">
+                        <span class="m-c-name">雨声</span>
+                        <div class="count-group">
+                            <i class="iconfont icon-bofang"></i>
+                            <span>33.2w</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--灯塔 推荐榜单-->
+        <div class="row lighthouse">
+            <div class="col">
+                <div class="light recommend">
+                    <div class="title">
+                        <span>推荐榜单</span>
+                        <span>whole night · 终夜灯</span>
+                    </div>
+                    <div class="preview">
+                        <img src="./img/avatar1.jpg">
+                        <img src="./img/2.jpg">
+                        <img src="./img/avatar3.jpg">
+                        <img src="./img/m.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--作者列表-->
+        <div class="row author">
+            <div class="col-author">
+                <div class="author-title">
+                    <div class="a-t-title">
+                        <span>作者合集</span>
+                        <span>&nbsp;·&nbsp;感谢各位女菩萨</span>
+                    </div>
+                    <a class="a-t-more">更多</a>
+                </div>
+                <div class="author-content">
+                    <div class="author-item" th:each="i:${#numbers.sequence(1,5)}">
+                        <a href="#">
+                            <img class="a-i-avatar" src="img/avatar3.jpg">
+                            <div class="a-i-nick">轩子巨2兔</div>
+                            <div class="a-i-btn">听听看</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--灯塔 国内国外-->
+        <div class="row lighthouse">
+            <div class="col">
+                <div class="light-part2 country">
+                    <a href="#">
+                        <div class="title home">
+                            <span>国内推荐</span>
+                            <span>whole night · 终夜灯</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="title outside">
+                            <span>国外推荐</span>
+                            <span>whole night · 终夜灯</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--可直接播放列表-->
+        <div class="row list">
+            <div class="col">
+                <div class="list-title">
+                    <div class="l-t-title">
+                        <span>最近更新</span>
+                        <span>&nbsp;·&nbsp;点击即可播放哦</span>
+                    </div>
+                    <a class="l-t-more">更多</a>
+                </div>
+                <div class="list-content">
+                    <div class="list-item">
+                        <a href="#">
+                            <div class="l-i-info">
+                                <img class="avatar" src="img/0.jpg">
+                                <div class="info">
+                                    <span>Saba (Lo Fi edit)</span><br/>
+                                    <span>Adi Shaikh/Char For</span>
+                                </div>
+                            </div>
+                            <img class="l-i-play" src="./img/play.png">
+                        </a>
+
+                        <a href="#">
+                            <div class="l-i-info">
+                                <img class="avatar" src="img/0.jpg">
+                                <div class="info">
+                                    <span>女仆的深夜助眠 ~</span><br/>
+                                    <span>小软</span>
+                                </div>
+                            </div>
+                            <img class="l-i-play" src="./img/play.png">
+                        </a>
+
+                        <a href="#">
+                            <div class="l-i-info">
+                                <img class="avatar" src="img/0.jpg">
+                                <div class="info">
+                                    <span>Saba (Lo Fi edit)</span><br/>
+                                    <span>Adi Shaikh/Char For</span>
+                                </div>
+                            </div>
+                            <img class="l-i-play" src="./img/play.png">
+                        </a>
+
+                        <a href="#">
+                            <div class="l-i-info">
+                                <img class="avatar" src="img/0.jpg">
+                                <div class="info">
+                                    <span>女仆的深夜助眠 ~</span><br/>
+                                    <span>小软</span>
+                                </div>
+                            </div>
+                            <img class="l-i-play" src="./img/play.png">
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
