@@ -7,7 +7,7 @@
     <!-- Bootstrap 的 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_2394069_gdgqu3gd6tf.css">
-    <title>Hello, world!</title>
+    <title>终夜灯</title>
     <style>
         input{
             outline: none;
@@ -42,6 +42,11 @@
         .top .user i{
             font-size: 20px;
             color: rgba(16, 174, 194, 0.66);
+        }
+        .top .user-avatar img{
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
         }
         .top .search{
             position: relative;
@@ -342,8 +347,12 @@
     <div class="container">
         <!--登录按钮，以及搜索栏-->
         <div class="row top no-gutters">
-            <div class="user">
+            <div class="user" th:if="true">
                 <i class="iconfont icon-yonghu"></i>
+            </div>
+            <div class="user-avatar" th:if="false">
+                <!--用户登陆后展示头像-->
+                <img src="./img/avatar1.jpg">
             </div>
             <div class="search">
                 <input placeholder="想听些什么?">
@@ -510,16 +519,12 @@
     <br/>
     <br/>
     <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+    <div style="display: flex;align-items: center;justify-content: center;margin: 0 auto">
+        <a href="/authorize/qq" style="display: flex;align-items: center;justify-content: center;flex-direction: column">
+            <img src="./img/qq.jpg" style="width: 40px;height: 40px;margin-bottom: 5px;">
+            <span style="color: #000000;font-size: 15px">QQ登陆</span>
+        </a>
+    </div>
     <br/>
     <br/>
     <br/>
@@ -528,6 +533,10 @@
     <br/>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
+    <script>
+        $('.user').click(()=>{
+            window.scrollTo(0, document.body.scrollHeight)
+        })
+    </script>
 </body>
 </html>
