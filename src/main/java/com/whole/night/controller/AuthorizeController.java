@@ -31,10 +31,13 @@ public class AuthorizeController {
     @GetMapping("/qcb")    //qqCallback回调方法
     public void loginBack(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html; charset=utf-8");
+        String queryString = ((HttpServletRequest)request).getQueryString();
+        String[] state = queryString.split("state=");
+        System.out.println(state[0]);
+        request.getSession().setAttribute("qq_connect_state",state[1]);
         try {
             PrintWriter out = response.getWriter();
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
-
             String accessToken = null,
                     openID = null;
             long tokenExpireIn = 0L;
@@ -46,23 +49,22 @@ public class AuthorizeController {
                 accessToken = accessTokenObj.getAccessToken();
                 tokenExpireIn = accessTokenObj.getExpireIn();
 
-                request.getSession().setAttribute("demo_access_token", accessToken);
-                request.getSession().setAttribute("demo_token_expirein", String.valueOf(tokenExpireIn));
+                request.getSession().setAttribute("access_token", accessToken);
+                request.getSession().setAttribute("token_expirein", String.valueOf(tokenExpireIn));
 
                 // 利用获取到的accessToken 去获取当前用的openid -------- start
                 OpenID openIDObj = new OpenID(accessToken);
                 openID = openIDObj.getUserOpenID();
 
                 out.println("欢迎你，代号为 " + openID + " 的用户!");
-                request.getSession().setAttribute("demo_openid", openID);
+                request.getSession().setAttribute("openid", openID);
                 out.println("<a href=" + "/shuoshuoDemo.html" + " target=\"_blank\">去看看发表说说的demo吧</a>");
                 // 利用获取到的accessToken 去获取当前用户的openid --------- end
-
                 out.println("<p> start -----------------------------------利用获取到的accessToken,openid 去获取用户在Qzone的昵称等信息 ---------------------------- start </p>");
                 UserInfo qzoneUserInfo = new UserInfo(accessToken, openID);
                 UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
-                out.println("<br/>");
                 if (userInfoBean.getRet() == 0) {
+                    System.out.println(userInfoBean);
                     out.println(userInfoBean.getNickname() + "<br/>");
                     out.println(userInfoBean.getGender() + "<br/>");
                     out.println("<image src=" + userInfoBean.getAvatar().getAvatarURL30() + "/><br/>");
