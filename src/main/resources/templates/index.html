@@ -83,11 +83,11 @@
             justify-content: center;
         }
         .hot{
-            background: url("./img/hot.png");
+            background: url("/img/hot.png");
             background-size: cover;
         }
         .recommend{
-            background: url("./img/recommend.png");
+            background: url("/img/recommend.png");
             background-size: cover;
         }
         .country{
@@ -111,11 +111,11 @@
             padding-left: 20px;
         }
         .country .home{
-            background: url("./img/g1.png");
+            background: url("/img/g1.png");
             background-size: cover;
         }
         .country .outside{
-            background: url("./img/g2.png");
+            background: url("/img/g2.png");
             background-size: cover;
         }
         .country .home :last-child{
@@ -347,12 +347,12 @@
     <div class="container">
         <!--登录按钮，以及搜索栏-->
         <div class="row top no-gutters">
-            <div class="user" th:if="true">
+            <div class="user" th:if="${session.user == null}">
                 <i class="iconfont icon-yonghu"></i>
             </div>
-            <div class="user-avatar" th:if="false">
+            <div class="user-avatar" th:if="${session.user != null}">
                 <!--用户登陆后展示头像-->
-                <img src="./img/avatar1.jpg">
+                <img th:src="${session.user.getAvatar()}">
             </div>
             <div class="search">
                 <input placeholder="想听些什么?">
@@ -368,10 +368,10 @@
                         <span>whole night · 终夜灯</span>
                     </div>
                     <div class="preview">
-                        <img src="./img/avatar1.jpg">
-                        <img src="./img/2.jpg">
-                        <img src="./img/avatar3.jpg">
-                        <img src="./img/m.jpg">
+                        <img src="/img/avatar1.jpg">
+                        <img src="/img/2.jpg">
+                        <img src="/img/avatar3.jpg">
+                        <img src="/img/m.jpg">
                     </div>
                 </div>
             </div>
@@ -408,10 +408,10 @@
                         <span>whole night · 终夜灯</span>
                     </div>
                     <div class="preview">
-                        <img src="./img/avatar1.jpg">
-                        <img src="./img/2.jpg">
-                        <img src="./img/avatar3.jpg">
-                        <img src="./img/m.jpg">
+                        <img src="/img/avatar1.jpg">
+                        <img src="/img/2.jpg">
+                        <img src="/img/avatar3.jpg">
+                        <img src="/img/m.jpg">
                     </div>
                 </div>
             </div>
@@ -429,7 +429,7 @@
                 <div class="author-content">
                     <div class="author-item" th:each="i:${#numbers.sequence(1,5)}">
                         <a href="#">
-                            <img class="a-i-avatar" src="img/avatar3.jpg">
+                            <img class="a-i-avatar" src="/img/avatar3.jpg">
                             <div class="a-i-nick">轩子巨2兔</div>
                             <div class="a-i-btn">听听看</div>
                         </a>
@@ -470,46 +470,46 @@
                     <div class="list-item">
                         <a href="#">
                             <div class="l-i-info">
-                                <img class="avatar" src="img/0.jpg">
+                                <img class="avatar" src="/img/0.jpg">
                                 <div class="info">
                                     <span>Saba (Lo Fi edit)</span><br/>
                                     <span>Adi Shaikh/Char For</span>
                                 </div>
                             </div>
-                            <img class="l-i-play" src="./img/play.png">
+                            <img class="l-i-play" src="/img/play.png">
                         </a>
 
                         <a href="#">
                             <div class="l-i-info">
-                                <img class="avatar" src="img/0.jpg">
+                                <img class="avatar" src="/img/0.jpg">
                                 <div class="info">
                                     <span>女仆的深夜助眠 ~</span><br/>
                                     <span>小软</span>
                                 </div>
                             </div>
-                            <img class="l-i-play" src="./img/play.png">
+                            <img class="l-i-play" src="/img/play.png">
                         </a>
 
                         <a href="#">
                             <div class="l-i-info">
-                                <img class="avatar" src="img/0.jpg">
+                                <img class="avatar" src="/img/0.jpg">
                                 <div class="info">
                                     <span>Saba (Lo Fi edit)</span><br/>
                                     <span>Adi Shaikh/Char For</span>
                                 </div>
                             </div>
-                            <img class="l-i-play" src="./img/play.png">
+                            <img class="l-i-play" src="/img/play.png">
                         </a>
 
                         <a href="#">
                             <div class="l-i-info">
-                                <img class="avatar" src="img/0.jpg">
+                                <img class="avatar" src="/img/0.jpg">
                                 <div class="info">
                                     <span>女仆的深夜助眠 ~</span><br/>
                                     <span>小软</span>
                                 </div>
                             </div>
-                            <img class="l-i-play" src="./img/play.png">
+                            <img class="l-i-play" src="/img/play.png">
                         </a>
                     </div>
                 </div>
@@ -521,7 +521,7 @@
     <br/>
     <div style="display: flex;align-items: center;justify-content: center;margin: 0 auto">
         <a href="/authorize/qq" style="display: flex;align-items: center;justify-content: center;flex-direction: column">
-            <img src="./img/qq.jpg" style="width: 40px;height: 40px;margin-bottom: 5px;">
+            <img src="/img/qq.jpg" style="width: 40px;height: 40px;margin-bottom: 5px;">
             <span style="color: #000000;font-size: 15px">QQ登陆</span>
         </a>
     </div>
