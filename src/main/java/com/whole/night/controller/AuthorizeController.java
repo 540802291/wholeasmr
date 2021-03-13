@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*第三方登陆授权*/
 @Controller
@@ -66,6 +69,7 @@ public class AuthorizeController {
                     currentUser.setNick(userInfoBean.getNickname());
                     currentUser.setAvatar(userInfoBean.getAvatar().getAvatarURL100());
                     session.setAttribute("user",currentUser);
+//                  userMapper.insert(currentUser);
                     return "redirect:/";
                 } else {
                     System.out.println("获取信息失败"+userInfoBean.getMsg());
