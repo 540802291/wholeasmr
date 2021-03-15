@@ -39,11 +39,12 @@ public class AuthorizeController {
     }
 
     @GetMapping("/qcb")    //qqCallback回调方法
-    public String loginBack(HttpServletRequest request, HttpServletResponse response , HttpSession session) {
+    public String loginBack(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html; charset=utf-8");
         String queryString = request.getQueryString();
         String[] state = queryString.split("state=");
-        request.getSession().setAttribute("qq_connect_state",state[1]);
+        HttpSession session = request.getSession();
+        session.setAttribute("qq_connect_state",state[1]);
         try {
             PrintWriter out = response.getWriter();
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
